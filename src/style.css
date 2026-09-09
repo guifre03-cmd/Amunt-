@@ -12,3 +12,13 @@
 .suport-castellers{display:flex;justify-content:center;align-items:flex-end;padding:1px 14px}
 .base-suport>span{position:absolute;right:-68px;top:10px;background:#111827;color:#fff;padding:3px 8px;border-radius:7px;font-size:10px;font-weight:800}
 /* Els castells bàsics mai mostren una base de suport. */
+
+/* Correccio final de la pinya: compacta, uniforme i enganxada als segons. */
+.pinya-classica{height:64px!important;width:min(96%,540px)!important;margin-top:-8px!important;overflow:visible!important}
+.pinya-darrere{bottom:20px!important}
+.pinya-davant{bottom:3px!important}
+.pinya-classica .casteller{margin:0 -6px!important}
+.pinya-classica .casteller:nth-child(3n){transform:none!important}
+.nucli-pinya{bottom:-4px!important;padding:3px 26px!important}
+.tower>.pis{margin-bottom:-4px!important}
+.tower>.pinya-classica+.pis,.tower>.pis+.pinya-classica{margin-bottom:-10px!important}

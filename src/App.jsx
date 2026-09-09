@@ -16,10 +16,10 @@ function Casteller({color,small,stress}){return <div className={'casteller '+(sm
 function Pinya({color}){
   return <div className="pinya-classica">
     <div className="pinya-files pinya-darrere">
-      {Array.from({length:17}).map((_,i)=><Casteller key={`d-${i}`} color={i%8===0?'#f8fafc':color} small stress={0}/>) }
+      {Array.from({length:17}).map((_,i)=><Casteller key={`d-${i}`} color={color} small stress={0}/>) }
     </div>
     <div className="pinya-files pinya-davant">
-      {Array.from({length:13}).map((_,i)=><Casteller key={`f-${i}`} color={i%7===0?'#f8fafc':color} small stress={0}/>) }
+      {Array.from({length:13}).map((_,i)=><Casteller key={`f-${i}`} color={color} small stress={0}/>) }
     </div>
     <div className="nucli-pinya" style={{background:color}}>PINYA</div>
   </div>
