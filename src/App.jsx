@@ -1,77 +1,57 @@
 import React,{useEffect,useMemo,useRef,useState}from'react';
 const COLORS=['#b91c1c','#1d4ed8','#15803d','#7e22ce','#ea580c','#db2777'];
 const DATA=[
-['pd4','Pilar de 4',1,4,18,0,18,1,30,35,'p'],
-['4d6','4 de 6',4,6,32,0,34,1,120,145,''],
-['3d6','3 de 6',3,6,34,0,31,1,125,150,''],
-['3d6a','3 de 6 amb agulla',3,6,43,160,36,1,165,185,'a'],
-['4d6a','4 de 6 amb agulla',4,6,46,260,41,1,170,190,'a'],
-//['7d6','7 de 6',7,6,49,390,52,1,160,195,''],
-['5d6','5 de 6',5,6,51,540,47,1,175,205,''],
-//['7d6a','7 de 6 amb agulla',7,6,54,720,58,1,210,235,'a'],
-//['5d6a','5 de 6 amb agulla',5,6,56,900,52,1,215,240,'a'],
-//['3d6s','3 de 6 aixecat per sota',3,6,58,1100,40,1,220,245,'s'],
-['2d6','2 de 6',2,6,60,1350,38,1,250,300,''],
-['pd5','Pilar de 5',1,5,62,1650,38,1,260,315,'p'],
-['9d6','9 de 6',9,6,64,1950,68,1,295,355,''],
-['4d7','4 de 7',4,7,66,2350,58,2,325,395,''],
-['3d7','3 de 7',3,7,68,2750,54,2,345,415,''],
-['4d7a','4 de 7 amb agulla',4,7,70,3250,65,2,465,515,'a'],
-['3d7a','3 de 7 amb agulla',3,7,71,3750,61,2,485,545,'a'],
-//['7d7','7 de 7',7,7,72,4300,80,2,460,555,''],
-['5d7','5 de 7',5,7,73,4850,73,2,470,565,''],
-//['7d7a','7 de 7 amb agulla',7,7,74,5500,88,2,570,640,'a'],
-//['5d7a','5 de 7 amb agulla',5,7,75,6150,81,2,605,670,'a'],
-//['3d7s','3 de 7 aixecat per sota',3,7,76,6800,62,2,635,705,'s'],
-['9d7','9 de 7',9,7,77,7500,98,2,615,740,''],
-['2d7','2 de 7',2,7,78,8250,50,2,670,805,''],
-['4d8','4 de 8',4,8,80,9100,92,3,700,845,''],
-['pd6','Pilar de 6',1,6,82,10000,58,3,765,920,'p'],
-['3d8','3 de 8',3,8,83,11000,84,3,805,970,''],
-//['7d8','7 de 8',7,8,84,12100,125,3,905,1090,''],
-['2d8f','2 de 8 amb folre',2,8,86,13300,115,4,1005,1210,'f'],
-['pd7f','Pilar de 7 amb folre',1,7,87,14600,105,4,1055,1270,'pf'],
-['5d8','5 de 8',5,8,88,16000,112,4,1150,1385,''],
-['4d8a','4 de 8 amb agulla',4,8,89,17500,110,4,1310,1455,'a'],
-['3d8a','3 de 8 amb agulla',3,8,90,19100,103,4,1375,1530,'a'],
-//['7d8a','7 de 8 amb agulla',7,8,91,20800,138,4,1475,1635,'a'],
-//['5d8a','5 de 8 amb agulla',5,8,92,22600,126,4,1555,1730,'a'],
-['4d9f','4 de 9 amb folre',4,9,93,24600,155,5,1510,1820,'f'],
-['3d9f','3 de 9 amb folre',3,9,94,26700,145,5,1585,1910,'f'],
-['9d8','9 de 8',9,8,95,29000,165,5,1980,2385,''],
-//['3d8s','3 de 8 aixecat per sota',3,8,95,31400,100,5,2340,2600,'s'],
-['2d9fm','2 de 9 amb folre i manilles',2,9,96,34000,178,6,2265,2730,'fm'],
-['pd8fm','Pilar de 8 amb folre i manilles',1,8,97,36800,165,6,2380,2870,'pfm'],
-//['7d9f','7 de 9 amb folre',7,9,97,39800,195,6,2500,3010,'f'],
-['5d9f','5 de 9 amb folre',5,9,97,43000,184,6,2595,3125,'f'],
-['4d9af','4 de 9 amb folre i agulla',4,9,98,46500,180,7,2955,3285,'fa'],
-['3d9af','3 de 9 amb folre i agulla',3,9,98,50200,170,7,3100,3445,'fa'],
-['4d9','4 de 9 sense folre',4,9,98,54200,140,7,3405,4105,''],
-['2d8','2 de 8 sense folre',2,8,98,58500,105,7,3575,4310,''],
-['3d10fm','3 de 10 amb folre i manilles',3,10,99,63200,220,8,3755,4525,'fm'],
-['4d10fm','4 de 10 amb folre i manilles',4,10,99,68200,240,8,4095,4930,'fm'],
-['9d9f','9 de 9 amb folre',9,9,99,73600,255,8,4295,5180,'f'],
-['2d9f','2 de 9 amb folre',2,9,99,79400,168,9,4685,5645,'f'],
-['pd9fmp','Pilar de 9 amb folre, manilles i puntals',1,9,99,85600,205,9,4920,5925,'pfmx'],
-['3d9','3 de 9 sense folre',3,9,100,92300,135,9,5165,6220,''],
-['pd7','Pilar de 7 sense folre',1,7,100,99500,86,9,5280,6360,'p'],
-['2d10fmp','2 de 10 amb folre, manilles i puntals',2,10,100,107000,245,10,5630,6780,'fmx'],
-['4d10f','4 de 10 amb folre',4,10,100,115000,230,10,5910,7120,'f'],
-['3d10f','3 de 10 amb folre',3,10,100,124000,215,10,6205,7475,'f']];
-const CASTELLS=DATA.map(v=>({id:v[0],name:v[1],w:v[2],h:v[3],difficulty:v[4],prestige:v[5],people:v[6],season:v[7],loaded:v[8],unloaded:v[9],pillar:v[10].includes('p'),folre:v[10].includes('f'),manilles:v[10].includes('m'),puntals:v[10].includes('x')}));
+['pd4','Pilar de 4',1,4,18,0,18,1,30,35,'p'],['4d6','4 de 6',4,6,32,0,34,1,120,145,''],['3d6','3 de 6',3,6,34,0,31,1,125,150,''],['3d6a','3 de 6 amb agulla',3,6,43,160,36,1,165,185,'a'],['4d6a','4 de 6 amb agulla',4,6,46,260,41,1,170,190,'a'],['7d6','7 de 6',7,6,49,390,52,1,160,195,''],['5d6','5 de 6',5,6,51,540,47,1,175,205,''],['7d6a','7 de 6 amb agulla',7,6,54,720,58,1,210,235,'a'],['5d6a','5 de 6 amb agulla',5,6,56,900,52,1,215,240,'a'],['3d6s','3 de 6 aixecat per sota',3,6,58,1100,40,1,220,245,'s'],['2d6','2 de 6',2,6,60,1350,38,1,250,300,''],['pd5','Pilar de 5',1,5,62,1650,38,1,260,315,'p'],['9d6','9 de 6',9,6,64,1950,68,1,295,355,''],
+['4d7','4 de 7',4,7,66,2350,58,2,325,395,''],['3d7','3 de 7',3,7,68,2750,54,2,345,415,''],['4d7a','4 de 7 amb agulla',4,7,70,3250,65,2,465,515,'a'],['3d7a','3 de 7 amb agulla',3,7,71,3750,61,2,485,545,'a'],['7d7','7 de 7',7,7,72,4300,80,2,460,555,''],['5d7','5 de 7',5,7,73,4850,73,2,470,565,''],['7d7a','7 de 7 amb agulla',7,7,74,5500,88,2,570,640,'a'],['5d7a','5 de 7 amb agulla',5,7,75,6150,81,2,605,670,'a'],['3d7s','3 de 7 aixecat per sota',3,7,76,6800,62,2,635,705,'s'],['9d7','9 de 7',9,7,77,7500,98,2,615,740,''],['2d7','2 de 7',2,7,78,8250,50,2,670,805,''],
+['4d8','4 de 8',4,8,80,9100,92,3,700,845,''],['pd6','Pilar de 6',1,6,82,10000,58,3,765,920,'p'],['3d8','3 de 8',3,8,83,11000,84,3,805,970,''],['7d8','7 de 8',7,8,84,12100,125,3,905,1090,''],['2d8f','2 de 8 amb folre',2,8,86,13300,115,4,1005,1210,'f'],['pd7f','Pilar de 7 amb folre',1,7,87,14600,105,4,1055,1270,'pf'],['5d8','5 de 8',5,8,88,16000,112,4,1150,1385,''],['4d8a','4 de 8 amb agulla',4,8,89,17500,110,4,1310,1455,'a'],['3d8a','3 de 8 amb agulla',3,8,90,19100,103,4,1375,1530,'a'],['7d8a','7 de 8 amb agulla',7,8,91,20800,138,4,1475,1635,'a'],['5d8a','5 de 8 amb agulla',5,8,92,22600,126,4,1555,1730,'a'],
+['4d9f','4 de 9 amb folre',4,9,93,24600,155,5,1510,1820,'f'],['3d9f','3 de 9 amb folre',3,9,94,26700,145,5,1585,1910,'f'],['9d8','9 de 8',9,8,95,29000,165,5,1980,2385,''],['3d8s','3 de 8 aixecat per sota',3,8,95,31400,100,5,2340,2600,'s'],['2d9fm','2 de 9 amb folre i manilles',2,9,96,34000,178,6,2265,2730,'fm'],['pd8fm','Pilar de 8 amb folre i manilles',1,8,97,36800,165,6,2380,2870,'pfm'],['7d9f','7 de 9 amb folre',7,9,97,39800,195,6,2500,3010,'f'],['5d9f','5 de 9 amb folre',5,9,97,43000,184,6,2595,3125,'f'],['4d9af','4 de 9 amb folre i agulla',4,9,98,46500,180,7,2955,3285,'fa'],['3d9af','3 de 9 amb folre i agulla',3,9,98,50200,170,7,3100,3445,'fa'],['4d9','4 de 9 sense folre',4,9,98,54200,140,7,3405,4105,''],['2d8','2 de 8 sense folre',2,8,98,58500,105,7,3575,4310,''],
+['3d10fm','3 de 10 amb folre i manilles',3,10,99,63200,220,8,3755,4525,'fm'],['4d10fm','4 de 10 amb folre i manilles',4,10,99,68200,240,8,4095,4930,'fm'],['9d9f','9 de 9 amb folre',9,9,99,73600,255,8,4295,5180,'f'],['2d9f','2 de 9 amb folre',2,9,99,79400,168,9,4685,5645,'f'],['pd9fmp','Pilar de 9 amb folre, manilles i puntals',1,9,99,85600,205,9,4920,5925,'pfmx'],['3d9','3 de 9 sense folre',3,9,100,92300,135,9,5165,6220,''],['pd7','Pilar de 7 sense folre',1,7,100,99500,86,9,5280,6360,'p'],['2d10fmp','2 de 10 amb folre, manilles i puntals',2,10,100,107000,245,10,5630,6780,'fmx'],['4d10f','4 de 10 amb folre',4,10,100,115000,230,10,5910,7120,'f'],['3d10f','3 de 10 amb folre',3,10,100,124000,215,10,6205,7475,'f']];
+const CASTELLS=DATA.map(v=>({id:v[0],name:v[1],w:v[2],h:v[3],difficulty:v[4],prestige:v[5],people:v[6],season:v[7],loaded:v[8],unloaded:v[9],pillar:v[10].startsWith('p'),folre:v[10].includes('f'),manilles:v[10].includes('m'),puntals:v[10].includes('x')}));
 const EVENTS=[2,4,6,8,11,14].map((week,i)=>({week,name:['Mostra d’entitats','Festa Major del Barri','Diada de la Plaça Nova','Trobada de Colles','Festa Major','Gran Diada de Tardor'][i],icon:['🏘️','🎉','☀️','⚔️','🎺','🏆'][i],pressure:i*4,fans:5+i*5}));
 const INIT={week:1,season:1,energy:90,morale:70,members:42,prestige:0,tests:6,falls:0,unlocked:['pd4','4d6','3d6'],prep:{pd4:40,'4d6':26,'3d6':28},mastery:{pd4:40,'4d6':26,'3d6':28},attended:[],proposal:null,declined:[]};
 const clamp=n=>Math.max(0,Math.min(100,n));const feel=n=>n>=68?'Molt preparat':n>=42?'Amb opcions':n>=22?'Just':'Fora de programa';
 function pom(w){return w===9?{d:6,a:3,e:3}:w===5||w===7?{d:4,a:2,e:1}:{d:w===1?0:2,a:w===1?0:1,e:1}}
 function stages(c){const r=[{t:'pinya',label:'Pinya i baixos'}];if(c.folre)r.push({t:'support',label:'Folre'});if(c.manilles)r.push({t:'support',label:'Manilles'});if(c.puntals)r.push({t:'support',label:'Puntals'});if(c.pillar){for(let i=1;i<c.h;i++)r.push({t:i===c.h-1?'enxaneta':'trunk',n:1,label:i===c.h-1?'Enxaneta':`Pis ${i+1}`});return r}for(let i=0;i<Math.max(0,c.h-4);i++)r.push({t:'trunk',n:c.w,label:['Segons','Terços','Quarts','Quints','Sisens','Setens'][i]});const p=pom(c.w);r.push({t:'dosos',n:p.d,label:'Dosos'},{t:'aixecador',n:p.a,label:p.a>1?'Acotxadors':'Acotxador'},{t:'enxaneta',n:p.e,label:p.e>1?'Enxanetes':'Enxaneta'},{t:'aleta',label:'Aleta'});return r}
 function Casteller({color,small,stress}){return <div className={'casteller '+(small?'small':'')}><div className="cap">{stress>86?'😨':stress>68?'😰':stress>48?'😬':'😤'}</div><div className="camisa" style={{background:color}}/><div className="faixa"/></div>}
-function Pinya({color}){return <div className="pinya-wrap"><div className="pinya-people">{Array.from({length:19}).map((_,i)=><Casteller key={i} color={i%8===0?'#f8fafc':color} small stress={0}/>)}</div><div className="pinya-label" style={{background:color}}>PINYA I BAIXOS</div></div>}
-function Tower({c,rows,color,stress}){return <div className={'tower '+(stress>82?'hard':stress>55?'shake':'')}>{rows.map((r,i)=>r.t==='pinya'?<Pinya key={i} color={color}/>:r.t==='support'?<div className="support" key={i} style={{borderColor:color}}><span>{r.label}</span>{Array.from({length:Math.min(9,c.w+5)}).map((_,j)=><Casteller key={j} color={color} small stress={stress}/>)}</div>:r.t==='aleta'?<div className="aleta" key={i}>🙋</div>:<div className="pis" key={i}>{Array.from({length:r.n}).map((_,j)=><Casteller key={j} color={color} small={r.t!=='trunk'} stress={stress}/>)}</div>)}</div>}
-function candidate(g){return CASTELLS.find(c=>!g.unlocked.includes(c.id)&&!g.declined.includes(c.id)&&c.season<=g.season&&c.prestige<=g.prestige&&c.people<=g.members)}
+function Pinya({color}){
+  return <div className="pinya-classica">
+    <div className="pinya-files pinya-darrere">
+      {Array.from({length:17}).map((_,i)=><Casteller key={`d-${i}`} color={i%8===0?'#f8fafc':color} small stress={0}/>) }
+    </div>
+    <div className="pinya-files pinya-davant">
+      {Array.from({length:13}).map((_,i)=><Casteller key={`f-${i}`} color={i%7===0?'#f8fafc':color} small stress={0}/>) }
+    </div>
+    <div className="nucli-pinya" style={{background:color}}>PINYA</div>
+  </div>
+}
+
+function SupportBase({label,color,count,stress}){
+  return <div className={`base-suport base-${label.toLowerCase()}`}>
+    <div className="suport-castellers">
+      {Array.from({length:count}).map((_,i)=><Casteller key={i} color={color} small stress={stress}/>) }
+    </div>
+    <span>{label}</span>
+  </div>
+}
+
+function Tower({c,rows,color,stress}){
+  return <div className={'tower '+(stress>82?'hard':stress>55?'shake':'')}>
+    {rows.map((r,i)=>{
+      if(r.t==='pinya') return <Pinya key={i} color={color}/>;
+      if(r.t==='support') return <SupportBase key={i} label={r.label} color={color} count={Math.min(9,c.w+5)} stress={stress}/>;
+      if(r.t==='aleta') return <div className="aleta" key={i}>🙋</div>;
+      return <div className="pis" key={i} aria-label={r.label}>
+        {Array.from({length:r.n}).map((_,j)=><Casteller key={j} color={color} small={r.t!=='trunk'} stress={stress}/>) }
+      </div>;
+    })}
+  </div>
+}
+
+function candidate(g){return ACTIVE_CASTELLS.find(c=>!g.unlocked.includes(c.id)&&!g.declined.includes(c.id)&&c.season<=g.season&&c.prestige<=g.prestige&&c.people<=g.members)}
 function propose(g){if(g.proposal)return g;const c=candidate(g);return c?{...g,proposal:c.id}:g}
-function decay(g){const prep={...g.prep};g.unlocked.forEach(id=>{const c=CASTELLS.find(x=>x.id===id);let loss=c.h<=6?4:c.h===7?10:c.h===8?18:28;if(c.folre)loss+=8;if(c.manilles)loss+=8;if(c.puntals)loss+=7;prep[id]=Math.max(Math.round((g.mastery[id]||0)*.52),(prep[id]||0)-loss)});return{...g,prep}}
+function decay(g){const prep={...g.prep};g.unlocked.forEach(id=>{const c=ACTIVE_CASTELLS.find(x=>x.id===id);let loss=c.h<=6?4:c.h===7?10:c.h===8?18:28;if(c.folre)loss+=8;if(c.manilles)loss+=8;if(c.puntals)loss+=7;prep[id]=Math.max(Math.round((g.mastery[id]||0)*.52),(prep[id]||0)-loss)});return{...g,prep}}
 function recruitment(event,all,g){const valid=all.filter(r=>r.valid).length,falls=all.filter(r=>r.fall).length;let n=Math.floor(event.fans/5)+valid*2-falls*3+(valid===3?2:0)-(g.morale<35?2:0);return Math.max(-6,Math.min(10,n))}
-export default function App(){const saved=(()=>{try{return JSON.parse(localStorage.getItem('amunt-reconstruit'))}catch{return null}})();const[screen,setScreen]=useState(saved?'hub':'welcome'),[club,setClub]=useState(saved?.club||{name:'',town:'',color:COLORS[0]}),[g,setG]=useState(saved?.g||INIT),[pick,setPick]=useState(null),[event,setEvent]=useState(null),[run,setRun]=useState(null),[summary,setSummary]=useState(null);useEffect(()=>{if(club.name)localStorage.setItem('amunt-reconstruit',JSON.stringify({club,g}))},[club,g]);const avail=CASTELLS.filter(c=>g.unlocked.includes(c.id));const now=EVENTS.find(e=>e.week===g.week&&!g.attended.includes(e.name));const advance=()=>{if(g.week===16){setG(x=>decay({...x,week:1,season:x.season+1,energy:94,tests:6,attended:[],proposal:null,declined:[]}));setScreen('season')}else setG(x=>propose({...x,week:x.week+1,energy:clamp(x.energy+24),tests:6}))};const start=e=>{setEvent(e);setRun({round:1,valid:0,used:[],results:[],phase:'castells'});setScreen('act')};const attempt=(c,pillar=false)=>{const p=g.prep[c.id]||0,score=p+g.energy*.1+g.morale*.18-(c.difficulty-25)*.58-event.pressure,roll=Math.random()*100,res=roll<score+23?'Descarregat':roll<score+41?'Carregat':roll<score+68?'Intent desmuntat':'Intent',valid=res==='Descarregat'||res==='Carregat',fall=res==='Intent',cost=res==='Descarregat'?3:res==='Carregat'?5:res==='Intent desmuntat'?2:6;setG(x=>propose({...x,energy:clamp(x.energy-cost),morale:clamp(x.morale+(res==='Descarregat'?4:fall?-5:0)),falls:x.falls+(fall?1:0),prestige:x.prestige+(res==='Descarregat'?c.unloaded:res==='Carregat'?c.loaded:0),prep:{...x.prep,[c.id]:clamp(p+(valid?5:1))}}));setRun(r=>{if(pillar)return{...r,pillar:{name:c.name,res,valid,fall},phase:'done'};const used=valid?[...r.used,c.id]:r.used,v=r.valid+(valid?1:0),round=r.round+1,left=avail.filter(x=>!x.pillar&&!used.includes(x.id)&&(g.prep[x.id]||0)>=22);return{...r,used,valid:v,round,results:[...r.results,{name:c.name,res,valid,fall}],phase:v>=3||round>5||left.length===0?'pillar':'castells'}})};if(screen==='welcome')return <Welcome saved={!!saved} go={setScreen}/>;if(screen==='setup')return <Setup club={club} setClub={setClub} done={()=>club.name&&club.town&&(setG(INIT),setScreen('hub'))}/>;if(screen==='proposal'){const c=CASTELLS.find(x=>x.id===g.proposal);return <Proposal c={c} accept={()=>{setG(x=>({...x,unlocked:[...x.unlocked,c.id],prep:{...x.prep,[c.id]:5},mastery:{...x.mastery,[c.id]:5},proposal:null}));setScreen('hub')}} later={()=>{setG(x=>({...x,declined:[...x.declined,c.id],proposal:null}));setScreen('hub')}}/>;}if(screen==='choose')return <Choose g={g} avail={avail} go={c=>{setPick(c);setScreen('training')}} back={()=>setScreen('hub')}/>;if(screen==='training')return <Training c={pick} color={club.color} prep={g.prep[pick.id]||0} done={o=>{const before=g.prep[pick.id]||0,after=clamp(before+o.gain);setG(x=>propose({...x,tests:x.tests-1,energy:clamp(x.energy-o.cost),morale:clamp(x.morale+(o.result==='Caiguda'?-3:1)),falls:x.falls+(o.result==='Caiguda'?1:0),prep:{...x.prep,[pick.id]:after},mastery:{...x.mastery,[pick.id]:clamp((x.mastery[pick.id]||0)+o.gain*.3)}}));setSummary({...o,before,after,name:pick.name});setScreen('summary')}}/>;if(screen==='summary')return <Summary d={summary} next={()=>setScreen('choose')}/>;if(screen==='calendar')return <Calendar g={g} back={()=>setScreen('hub')} start={start}/>;if(screen==='act')return <Act event={event} run={run} avail={avail} g={g} attempt={attempt} finish={()=>{const all=[...run.results,...(run.pillar?[run.pillar]:[])],delta=recruitment(event,all,g);setG(x=>propose({...x,attended:[...x.attended,event.name],members:Math.max(15,x.members+delta)}));setSummary({delta});setScreen('actSummary')}}/>;if(screen==='actSummary')return <ActSummary delta={summary.delta} next={()=>setScreen('hub')}/>;if(screen==='season')return <Season g={g} next={()=>setScreen('hub')}/>;return <Hub club={club} g={g} avail={avail} now={now} proposal={g.proposal&&CASTELLS.find(c=>c.id===g.proposal)} openProposal={()=>setScreen('proposal')} train={()=>setScreen('choose')} calendar={()=>setScreen('calendar')} advance={advance} start={()=>start(now)} reset={()=>{localStorage.removeItem('amunt-reconstruit');location.reload()}}/>}
+export default function App(){const saved=(()=>{try{return JSON.parse(localStorage.getItem('amunt-reconstruit'))}catch{return null}})();const[screen,setScreen]=useState(saved?'hub':'welcome'),[club,setClub]=useState(saved?.club||{name:'',town:'',color:COLORS[0]}),[g,setG]=useState(saved?.g||INIT),[pick,setPick]=useState(null),[event,setEvent]=useState(null),[run,setRun]=useState(null),[summary,setSummary]=useState(null);useEffect(()=>{if(club.name)localStorage.setItem('amunt-reconstruit',JSON.stringify({club,g}))},[club,g]);const avail=ACTIVE_CASTELLS.filter(c=>g.unlocked.includes(c.id));const now=EVENTS.find(e=>e.week===g.week&&!g.attended.includes(e.name));const advance=()=>{if(g.week===16){setG(x=>decay({...x,week:1,season:x.season+1,energy:94,tests:6,attended:[],proposal:null,declined:[]}));setScreen('season')}else setG(x=>propose({...x,week:x.week+1,energy:clamp(x.energy+24),tests:6}))};const start=e=>{setEvent(e);setRun({round:1,valid:0,used:[],results:[],phase:'castells'});setScreen('act')};const attempt=(c,pillar=false)=>{const p=g.prep[c.id]||0,score=p+g.energy*.1+g.morale*.18-(c.difficulty-25)*.58-event.pressure,roll=Math.random()*100,res=roll<score+23?'Descarregat':roll<score+41?'Carregat':roll<score+68?'Intent desmuntat':'Intent',valid=res==='Descarregat'||res==='Carregat',fall=res==='Intent',cost=res==='Descarregat'?3:res==='Carregat'?5:res==='Intent desmuntat'?2:6;setG(x=>propose({...x,energy:clamp(x.energy-cost),morale:clamp(x.morale+(res==='Descarregat'?4:fall?-5:0)),falls:x.falls+(fall?1:0),prestige:x.prestige+(res==='Descarregat'?c.unloaded:res==='Carregat'?c.loaded:0),prep:{...x.prep,[c.id]:clamp(p+(valid?5:1))}}));setRun(r=>{if(pillar)return{...r,pillar:{name:c.name,res,valid,fall},phase:'done'};const used=valid?[...r.used,c.id]:r.used,v=r.valid+(valid?1:0),round=r.round+1,left=avail.filter(x=>!x.pillar&&!used.includes(x.id)&&(g.prep[x.id]||0)>=22);return{...r,used,valid:v,round,results:[...r.results,{name:c.name,res,valid,fall}],phase:v>=3||round>5||left.length===0?'pillar':'castells'}})};if(screen==='welcome')return <Welcome saved={!!saved} go={setScreen}/>;if(screen==='setup')return <Setup club={club} setClub={setClub} done={()=>club.name&&club.town&&(setG(INIT),setScreen('hub'))}/>;if(screen==='proposal'){const c=ACTIVE_CASTELLS.find(x=>x.id===g.proposal);return <Proposal c={c} accept={()=>{setG(x=>({...x,unlocked:[...x.unlocked,c.id],prep:{...x.prep,[c.id]:5},mastery:{...x.mastery,[c.id]:5},proposal:null}));setScreen('hub')}} later={()=>{setG(x=>({...x,declined:[...x.declined,c.id],proposal:null}));setScreen('hub')}}/>;}if(screen==='choose')return <Choose g={g} avail={avail} go={c=>{setPick(c);setScreen('training')}} back={()=>setScreen('hub')}/>;if(screen==='training')return <Training c={pick} color={club.color} prep={g.prep[pick.id]||0} done={o=>{const before=g.prep[pick.id]||0,after=clamp(before+o.gain);setG(x=>propose({...x,tests:x.tests-1,energy:clamp(x.energy-o.cost),morale:clamp(x.morale+(o.result==='Caiguda'?-3:1)),falls:x.falls+(o.result==='Caiguda'?1:0),prep:{...x.prep,[pick.id]:after},mastery:{...x.mastery,[pick.id]:clamp((x.mastery[pick.id]||0)+o.gain*.3)}}));setSummary({...o,before,after,name:pick.name});setScreen('summary')}}/>;if(screen==='summary')return <Summary d={summary} next={()=>setScreen('choose')}/>;if(screen==='calendar')return <Calendar g={g} back={()=>setScreen('hub')} start={start}/>;if(screen==='act')return <Act event={event} run={run} avail={avail} g={g} attempt={attempt} finish={()=>{const all=[...run.results,...(run.pillar?[run.pillar]:[])],delta=recruitment(event,all,g);setG(x=>propose({...x,attended:[...x.attended,event.name],members:Math.max(15,x.members+delta)}));setSummary({delta});setScreen('actSummary')}}/>;if(screen==='actSummary')return <ActSummary delta={summary.delta} next={()=>setScreen('hub')}/>;if(screen==='season')return <Season g={g} next={()=>setScreen('hub')}/>;return <Hub club={club} g={g} avail={avail} now={now} proposal={g.proposal&&ACTIVE_CASTELLS.find(c=>c.id===g.proposal)} openProposal={()=>setScreen('proposal')} train={()=>setScreen('choose')} calendar={()=>setScreen('calendar')} advance={advance} start={()=>start(now)} reset={()=>{localStorage.removeItem('amunt-reconstruit');location.reload()}}/>}
 function HumanLogo(){return <div className="logo-tower"><Casteller color="#fff" small stress={0}/><Casteller color="#fff" stress={0}/><Casteller color="#fff" stress={0}/><div>👥👥👥</div></div>}
 function Welcome({saved,go}){return <main className="hero"><HumanLogo/><p className="eyebrow">SIMULADOR CASTELLER</p><h1>AMUNT!</h1><p>Funda una colla, assaja i completa temporades.</p>{saved&&<button onClick={()=>go('hub')}>CONTINUAR PARTIDA</button>}<button onClick={()=>go('setup')}>NOVA COLLA</button></main>}
 function Setup({club,setClub,done}){return <main className="wrap narrow"><h1>Funda la teva colla</h1><label>Nom de la colla</label><input value={club.name} onChange={e=>setClub({...club,name:e.target.value})}/><label>Ciutat o poble</label><input value={club.town} onChange={e=>setClub({...club,town:e.target.value})}/><label>Color de la camisa</label><div className="colors">{COLORS.map(c=><button aria-label="Color" className={club.color===c?'selected':''} style={{background:c}} onClick={()=>setClub({...club,color:c})} key={c}/>)}</div><button onClick={done}>COMENÇA LA HISTÒRIA</button></main>}
