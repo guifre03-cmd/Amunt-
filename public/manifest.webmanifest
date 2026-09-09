@@ -1,1 +1,1 @@
-{"name":"Amunt! Simulador Casteller","short_name":"Amunt!","start_url":"/","display":"standalone","background_color":"#fff8e8","theme_color":"#dc2626","icons":[{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
+{"name":"Amunt! Simulador Casteller","short_name":"Amunt!","lang":"ca","start_url":"/","display":"standalone","background_color":"#fff8e8","theme_color":"#b91c1c","orientation":"portrait","icons":[{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
