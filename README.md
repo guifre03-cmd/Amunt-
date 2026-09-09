@@ -1,3 +1,10 @@
-# Amunt! App correcta
+# Amunt!
 
-Puja tot el contingut d’aquesta carpeta al repositori GitHub. Vercel: Framework Vite, build `npm run build`, output `dist`.
+Projecte Vite + React.
+
+```bash
+npm install
+npm run dev
+```
+
+Per publicar a Vercel: Build Command `npm run build`, Output Directory `dist`.
